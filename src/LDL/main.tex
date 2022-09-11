@@ -1,0 +1,60 @@
+\documentclass[twoside, uplatex]{article}
+
+\usepackage{aistats2023}
+
+% \documentclass[uplatex]{article}
+
+\usepackage{float}
+\usepackage[dvipdfmx]{hyperref, graphicx}
+
+\newcommand{\transpose}{{}^T}
+\newcommand{\inverse}{{}^{-1}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\given}[2]{ {{1}|{2}}}
+
+\title{Gaussian conditioning and LDL decomposition}
+\begin{document}
+
+\maketitle
+
+\section{Gaussian decomposition}
+
+\section{Gaussian elimination}
+
+\section{LDL decomposition}
+
+Suppose one of the diagonal block matrix is invertible. Here we assume the lower part of the block is diagonable.
+Then we can eliminate upper block by applying upper triangular matrix.
+
+\section{Conditioning Gaussian}
+
+In general, the joint distribution is splitted into two probabilities.  One is conditional probability and the other is marginal distribution.
+
+\begin{equation}
+    \label{eq:product-rule}
+    p(x_1, x_2) = p(x_1 | x_2) p(x_2).
+\end{equation}
+
+The joint distribution is written by Gaussian. We know the conditional and marginals are Gaussian as well.
+Then our goal is to find their means and covariances. Let those means and covariances $mu_{\given{1}{2}}, \Sigma_{\given{1}{2}}, mu_2, \Sigma_2$.
+The equation \ref{eq:product-rule} reads
+\begin{equation}
+    \exp \left [ -\half x\transpose \Sigma\inverse x \right ] = \exp \left [- \half x_\given{1}{2}\transpose \Sigma_\given{1}{2}\inverse x_\given{1}{2} + \half x_2 \transpose \Sigma_2 \inverse x_2 \right ]
+\end{equation}
+where we applied the exponential rules:  $(\exp a)(\exp b) = \exp(a+b).$
+
+
+\begin{equation}
+- \half  x\transpose \Sigma \inverse x = -\half \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} \transpose \begin{bmatrix}\Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} \inverse \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}.
+\end{equation}
+
+The goal is to decompose in a way that one term is pure in $x_2$, and the other is the linear mixture of $x_1$ and $x_2$.  
+
+\begin{equation}
+    \half x_\star\transpose \Sigma_\star\inverse x_\star + \half x_2 \transpose \Sigma \inverse x_2
+\end{equation}
+
+Once this decomposition is achieved we have decomposition in probability:
+
+
+\end{document}
