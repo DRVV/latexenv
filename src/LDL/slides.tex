@@ -1,0 +1,94 @@
+\documentclass{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\transpose}[1]{{#1}^T}
+\newcommand{\inverse}[1]{{#1}^{-1}}
+\newcommand{\norm}[1]{||{#1}||}
+\newcommand{\dual}[1]{{#1}^{*}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\given}[2]{ {{1}|{2}}}
+\newcommand{\identity}[1]{\bm{1}_n}
+
+\begin{document}
+\begin{frame}
+    \frametitle{Finding conditional distribution = completing squares}
+
+    When we want to find conditional and mariginal distribution, we focus on the exponent and decompose it into two quadratics.
+
+    \begin{equation}
+        \half \transpose{x}_\star \inverse{\Sigma_\star} x_\star + \half \transpose{x_2}  \inverse{\Sigma} x_2.
+    \end{equation}
+
+    This decomposition is usually done by completeing squares.  This method is 1. tiresome and moreover, requires finding inverse separately.
+
+
+
+\end{frame}    
+
+\begin{frame}
+    \frametitle{Finding conditional = Block diagonalization}
+
+    
+    \begin{equation}
+        \transpose{x}_\star \inverse{\Sigma_\star} x_\star + \half \transpose{x_2}  \inverse{\Sigma_2} x_2.
+    \end{equation}
+    
+    In matrix notation, we can write this with a block diagonal matrix:
+    \begin{equation}
+        \begin{bmatrix}
+            \transpose{x}_\star \\ \transpose{x_2}    
+        \end{bmatrix}
+        \begin{bmatrix}
+            \inverse{\Sigma_\star} & 0 \\
+            0 & \inverse{\Sigma_2}    
+        \end{bmatrix}
+        \begin{bmatrix}
+            x_\star \\ x_2
+        \end{bmatrix}
+    \end{equation}
+    Since inverting the block diagonal matrix is reduced to the inverting the component matrices at the diagonal, 
+    \begin{equation}
+        \begin{bmatrix}
+            \transpose{x}_\star \\ \transpose{x_2}    
+        \end{bmatrix}
+        \inverse{
+        \begin{bmatrix}
+            {\Sigma_\star} & 0 \\
+            0 & {\Sigma_2}    
+        \end{bmatrix}
+        }
+        \begin{bmatrix}
+            x_\star \\ x_2
+        \end{bmatrix}.
+    \end{equation}
+
+    Thus our problem is reduced to finding the block diagonal matrix \emph{that keeps second dimension identical}.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Keeping lower part identical = Gaussian elimination with upper triangular matrix}
+
+    Suppose $\Sigma_{22}$ is invertible. Then we can eliminate the upper off-diagonal blcok as
+    \begin{equation}
+        \begin{bmatrix}
+            \identity{n} & - \Sigma_{12} \inverse{\Sigma_{22}} \\
+            0 & \identity{n}
+        \end{bmatrix}
+        \begin{bmatrix}
+            \Sigma_{11} & \Sigma_{12} \\
+            \Sigma_{21} & \Sigma_{22}
+        \end{bmatrix}
+        = %
+        \begin{bmatrix}
+            \Sigma_{11} - \Sigma_{12} \inverse{\Sigma_{22}} \Sigma_{21} & 0\\
+            \Sigma_{21} & \Sigma_{22}
+        \end{bmatrix}
+    \end{equation}
+
+\end{frame}
+\end{document}
