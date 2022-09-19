@@ -1,0 +1,177 @@
+% This document is based on http://math.shinshu-u.ac.jp/~hanaki/beamer/beamer.html
+\documentclass[dvipdfmx,cjk]{beamer}
+%\documentclass[dvipdfm,cjk]{beamer} % オプションは環境や利用するプログラムによって変える
+%\documentclass[dvips,cjk]{beamer}
+
+\usepackage{amssymb}
+% しおり（PDF にしたときの目次）の文字化け防止
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
+%\AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
+
+% 右下のアイコンを消す
+\setbeamertemplate{navigation symbols}{}
+
+% テーマ
+\usetheme{CambridgeUS}
+%\usetheme{Boadilla}           %% Beamer のディレクトリの中の
+%\usetheme{Madrid}             %% beamerthemeCambridgeUS.sty を指定
+%\usetheme{Antibes}            %% 色々と試してみるといいだろう
+%\usetheme{Montpellier}        %% サンプルが beamer\doc に色々とある。
+%\usetheme{Berkeley}
+%\usetheme{Goettingen}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+
+%\usecolortheme{rose}          %% colortheme を選ぶと色使いが変わる
+%\usecolortheme{albatross}
+
+%\useoutertheme{shadow}                 %% 箱に影をつける
+%\usefonttheme{professionalfonts}       %% 数式の文字を通常の LaTeX と同じにする
+
+%\setbeamercovered{transparent}         %% 消えている文字をうっすらと表示する
+\setbeamertemplate{theorems}[numbered]  %% 定理に番号をつける
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{proposition}[thm]{Proposition}
+\theoremstyle{example}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{question}[thm]{Question}
+\newtheorem{prob}[thm]{Problem}
+
+\newcommand{\tr}{\text{tr}}
+\newcommand{\transpose}[1]{{#1}^T}
+\newcommand{\inverse}[1]{{#1}^{-1}}
+\newcommand{\norm}[1]{||{#1}||}
+\newcommand{\dual}[1]{{#1}^{*}}
+\newcommand{\reals}{\mathbb{R}}
+% メタ情報
+\begin{document}
+\title[Sample of Beamer]{Mini notes}
+\author[nukopy]{nukopy}
+\institute[nukopy org.]{nukopy の所属}
+\date{February 6, 2007}
+
+% タイトルスライド
+\begin{frame}
+\titlepage
+\end{frame}
+
+% 目次（\section 名が自動で挿入される）
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+% セクション名（サンプルでは左上のスペースに表示される）
+\section{Matrices}
+\begin{frame}
+\frametitle{Norm on matrices} % スライドのタイトル
+
+The standard norm of vector is the sum of quadratics of componets.
+
+What would be the matrix version? Since a matrix is also a sequence of numbers,
+ the first guess is the same: the sum of quadratics of elements:
+
+\begin{equation}
+    \norm{A}^2 = \sum_{i,j} (A_{ij})^2.
+\end{equation}
+
+We can write this formula using trace:
+\begin{align}
+    \sum_{i,j} (A_{ij})^2 &= \sum_{i,j} \transpose{A}_{ji} A_{ij} \\
+    &= \tr \transpose{A} A.
+\end{align}
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+    It is easier to see the norm is invariant under orthogonal transformation:
+
+    \begin{align}
+        \tr \transpose{A} A &\to \tr \transpose{U A \inverse{U}} {U A \inverse{U}} \\ 
+        &= \tr \transpose{\inverse{U}} \transpose{A} \transpose{U} U A \inverse{U} \\ 
+        &= \tr \transpose{A} A.
+    \end{align}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inner product}
+
+    By analogy, we can define inner product via vector norm.
+
+    \begin{equation}
+        (A, B) := \frac{1}{4}\left(\norm{A + B}^2 - \norm{A - B}^2 \right)
+    \end{equation}
+
+    Explicitely,
+    \begin{align}
+        \norm{A + B} &= \tr \transpose{\left( A+B\right)} \left( A+B\right) \\
+        &= \tr \left(\transpose{A} A + \transpose{A} B + \transpose{B} A + \transpose{B} B \right) \\
+        &= \norm{A} + \norm{B} + 2 \tr \transpose{A} B,
+    \end{align}
+    where we used the symetry property of trace:
+    \begin{equation}
+        \tr \transpose{A} B = \tr \transpose{B} A.
+    \end{equation}
+
+    Thus the inner product of matrices becomes
+    \begin{equation}
+        \left(A, B\right) = \tr \transpose{A} B.
+    \end{equation}
+
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Dual matrix}
+
+    Inner product $(\cdot, \cdot)$ on vector space defines linear functional $\tilde{A} = (\cdot, A)$
+    \begin{equation}
+        (A, B) = \dual{A} B, \dual{A} = \tr \circ \transpose{A}.
+    \end{equation}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Derivative with respect to matrix}
+
+    We have seen that matrices can be treated as vector, and they are naturally endowed with inner product.
+    By utilizing this structure, we can consider derivative of matrix-arg function quite naturally.
+
+    Let $f: \text{Mat} \to \reals$ and $\Delta$ be an infinitesimal matrix. Then the derivative of $f$ is a matrix $L$ that satisfies the following:
+    \begin{equation}
+        f(A + \Delta) = f(A)  + (\Delta, L) + O(\Delta^2).
+    \end{equation}
+
+\end{frame}
+
+% 定理
+\section{定理型環境}
+\begin{frame} % \newtheorem で新しい環境も作れる
+\begin{thm}
+定理型環境が使える。
+使い方は普通の \LaTeX と同じ
+\end{thm}
+\pause
+
+% 証明
+\begin{proof}
+証明も書ける。
+\end{proof}
+\pause
+
+% 例
+\begin{exam}
+example
+\end{exam}
+\end{frame}
+
+% 文字色を変える
+\section{文字の色を変える}             %% 文字の色を変える
+\begin{frame}
+\frametitle{文字の色を変えてみよう！}
+{\color{red}赤}\pause
+{\color{blue}青}\pause
+{\color{green}緑}
+\end{frame}
+
+\end{document}
