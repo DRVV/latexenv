@@ -1,0 +1,54 @@
+\documentclass{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\transpose}[1]{{#1}^T}
+\newcommand{\inverse}[1]{{#1}^{-1}}
+\newcommand{\norm}[1]{||{#1}||}
+\newcommand{\dual}[1]{{#1}^{*}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\given}[2]{ {{1}|{2}}}
+\newcommand{\identity}[1]{\bm{1}_n}
+
+
+\begin{document}
+    \begin{frame}
+        \frametitle{Transaction}
+    
+        Transaction is charaterized by who $i$ sends which amount $v_{ij}$ to who $j$. We can encode this information in matrix:
+
+        \begin{equation}
+            V := \begin{bmatrix}
+                v_{11} & \dots & v_{1n} \\
+                \vdots & \dots & \vdots \\
+                v_{n1} & \dots & v_{nn}
+            \end{bmatrix}                
+        \end{equation}
+
+        But this representation is redundant in a sense that
+        \begin{enumerate}
+            \item Sending to itself $i = j$ does not make full sense. Or, the amount sent is always 0.
+            \item Sending an amount from $i$ to $j$ is equivalent to sending the \emph{negative amount} from $j$ to $i$.
+        \end{enumerate}
+        In matrix notation, those redundancy are charaterized by the antisymmetry of $V$: $\transpose{V} = - V.$
+
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Toward the Law of Transaction}
+    
+        The economy is driven by a series of transaction.
+        It makes sense that we consider the trajectory of transaction along time $t$. 
+        We assume transaction does not take place randomly, as suggested by economics, game theory , etc.
+        Here we focus on deterministic behaviour. In this case our system should be endowed with some ordinary differential equation (ODE):
+        \begin{equation}
+            \frac{d V}{d t} = K(t, V(t), \dots),
+        \end{equation}
+        where $K$ is an unknown function of time $t$, $V$, and possibly some other variables.
+
+    \end{frame}
+\end{document}
